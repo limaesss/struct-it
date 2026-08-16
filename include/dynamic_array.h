@@ -11,7 +11,7 @@ typedef struct {
     size_t capacity;
 } dynamic_array;
 
-void* da_init(dynamic_array* array, size_t element_size);
+void* da_init(dynamic_array* array, size_t capacity, size_t element_size);
 
 void da_rollback(dynamic_array* array);
 
