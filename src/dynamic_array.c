@@ -49,4 +49,12 @@ static bool checks(dynamic_array* array) {
     return true;
 }
 
+static bool index_check(dynamic_array* array, int index) {
+    if (index < 0 || index >= array->count) {
+        printf("[DA] index %d out of bounds (count: %lu)\n", index, array->count);
+        return false;
+    }
+    return true;
+}
+
 #endif
