@@ -25,5 +25,9 @@ void* da_init(dynamic_array* array, size_t capacity, size_t element_size) {
     return data;
 }
 
+void da_rollback(dynamic_array *array) {
+    free(array->data);
+    array->data = da_init(array, array->capacity, array->element_size);
+}
 
 #endif
