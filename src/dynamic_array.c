@@ -57,4 +57,17 @@ static bool index_check(dynamic_array* array, int index) {
     return true;
 }
 
+static void grow(dynamic_array* array) {
+    size_t new_capacity = array->capacity * 2;
+    void* new_data = realloc(array->data, new_capacity * array->element_size);
+    
+    if (new_data == NULL) {
+        printf("[DA] realloc failed \n");
+        return;
+    }
+    
+    array->data = new_data;
+    array->capacity = new_capacity;
+}
+
 #endif
