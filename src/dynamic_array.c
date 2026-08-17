@@ -103,9 +103,9 @@ static void grow(dynamic_array* array)
         return;
     }
     
+    array->grew = true;
     array->data = new_data;
     array->capacity = new_capacity;
-
 }
 
 static void shrink(dynamic_array* array) 
@@ -122,17 +122,16 @@ static void shrink(dynamic_array* array)
     } else { 
         array->capacity = new_capacity;
         array->data = new_data;
+        array->grew = false;
     }
 }
 
-static inline bool should_shrink(const dynamic_array* array, bool grew) { return grew == false && array->count > 0 && array->count <= array->capacity / 4; }
+static inline bool should_shrink(const dynamic_array* array) { return array->grew == false && array->count > 0 && array->count <= array->capacity / 4; }
 static inline bool should_grow(const dynamic_array* array) { return array->count >= array->capacity; }
 // i need the cycles more than you (i) need readability
 // though, it is readable, i admit; could be more readable, but why?
 
-bool grew = false; 
-// this is global because i am stupid,
-// sorry
+// NO MORE GLOBAL GREW!!
 
 void da_append(dynamic_array *array, void* element) 
 {
@@ -143,7 +142,7 @@ void da_append(dynamic_array *array, void* element)
     // why does it have to be like this? 
     // please add "append(void* array, void* element)"" PLEASE
 
-    if (should_grow(array)) { grow(array); grew = true; }
+    if (should_grow(array)) { grow(array); }
     // if should grow grow and grew
 }
 
@@ -162,7 +161,7 @@ void da_remove(dynamic_array *array, int index)
         array->data[i] = array->data[i + 1];
     }
 
-    if (should_shrink(array, grew)) { shrink(array); grew = false; }
+    if (should_shrink(array)) { shrink(array); }
     // if should shrink and didnt grow shrink and didnt grow 
     
     array->count--;

@@ -9,6 +9,8 @@ typedef struct {
     size_t element_size; // size of each element
     size_t count; //        count of elements in array
     size_t capacity; //     how much elements can fit
+
+    bool grew;
 } dynamic_array;
 
 void** da_init(dynamic_array* array, size_t capacity, size_t element_size);
