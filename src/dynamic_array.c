@@ -22,7 +22,7 @@ void** da_init(dynamic_array* array, size_t capacity, size_t element_size)
     // your heap is not real
     // 4 bytes
 
-    void* data = (void*)malloc(capacity * element_size);
+    void** data = (void*)malloc(capacity * element_size);
 
     if (data == NULL) {
         printf("[DA] init failed \n its only up from here, buy more RAM. \n You dont have enough to initialize an array with the size of %lu bytes. \n If youre running this on an embedded system, why are you using THIS data-struct lib? use literally any other one. \n Never try to make dynamic arrays, EVER AGAIN. Until you buy more RAM. \n", (capacity * element_size));
