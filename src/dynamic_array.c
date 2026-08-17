@@ -7,7 +7,8 @@
 
 #include "../include/dynamic_array.h"
 
-void* da_init(dynamic_array* array, size_t capacity, size_t element_size) {
+void* da_init(dynamic_array* array, size_t capacity, size_t element_size) 
+{
     if (element_size<=0) { element_size = 4;}
     if (capacity<=0) { capacity = 4; }
 
@@ -25,12 +26,14 @@ void* da_init(dynamic_array* array, size_t capacity, size_t element_size) {
     return data;
 }
 
-void da_rollback(dynamic_array* array) {
+void da_rollback(dynamic_array* array) 
+{
     free(array->data);
     array->data = da_init(array, array->capacity, array->element_size);
 }
 
-static bool checks(dynamic_array* array) {
+static bool checks(dynamic_array* array) 
+{
     if (array == NULL) {
         printf("[DA] NULL array pointer (why?) \n");
         return false;
@@ -49,7 +52,8 @@ static bool checks(dynamic_array* array) {
     return true;
 }
 
-static bool index_check(dynamic_array* array, int index) {
+static bool index_check(dynamic_array* array, int index) 
+{
     if (index < 0 || index >= array->count) {
         printf("[DA] index %d out of bounds (count: %lu)\n", index, array->count);
         return false;
@@ -57,7 +61,8 @@ static bool index_check(dynamic_array* array, int index) {
     return true;
 }
 
-static void grow(dynamic_array* array) {
+static void grow(dynamic_array* array) 
+{
     size_t new_capacity = array->capacity * 2;
     void* new_data = realloc(array->data, new_capacity * array->element_size);
     
@@ -70,7 +75,8 @@ static void grow(dynamic_array* array) {
     array->capacity = new_capacity;
 }
 
-static void shrink(dynamic_array* array) {
+static void shrink(dynamic_array* array) 
+{
     size_t new_capacity = array->capacity / 2;
     void* new_data = realloc(array->data, new_capacity * array->element_size);
     
@@ -84,5 +90,9 @@ static void shrink(dynamic_array* array) {
     }
 }
 
+void da_append(dynamic_array *array, void *element) 
+{
+
+}
 
 #endif
