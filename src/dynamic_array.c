@@ -34,6 +34,7 @@ void** da_init(dynamic_array* array, size_t capacity, size_t element_size)
     }
 
     array->element_size = element_size;
+    array->capacity = capacity;
     array->count = 0;
     return data;
 
