@@ -70,4 +70,19 @@ static void grow(dynamic_array* array) {
     array->capacity = new_capacity;
 }
 
+static void shrink(dynamic_array* array) {
+    size_t new_capacity = array->capacity / 2;
+    void* new_data = realloc(array->data, new_capacity * array->element_size);
+    
+    if (new_data == NULL) {
+        printf("[DA] realloc failed \n");
+        da_rollback(array);
+        return;
+    } else { 
+        array->capacity = new_capacity;
+        array->data = new_data;
+    }
+}
+
+
 #endif
