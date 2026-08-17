@@ -90,9 +90,16 @@ static void shrink(dynamic_array* array)
     }
 }
 
-void da_append(dynamic_array *array, void *element) 
-{
+static inline bool should_shrink(const dynamic_array* array, bool grew) { return grew == false && array->count > 0 && array->count <= array->capacity / 4; }
+static inline bool should_grow(const dynamic_array* array) { return array->count >= array->capacity; }
 
+void da_append(dynamic_array *array, void* element) 
+{
+    if (!checks(array)) { return; }
+    array->data[array->count] = element;
+    array->count++;
+
+    if (should_grow(array)) { grow(array); }
 }
 
 #endif
