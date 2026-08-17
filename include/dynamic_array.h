@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 typedef struct {
-    void* data;
+    void** data;
     size_t element_size; // size of each element
     size_t count; //        count of elements in array
     size_t capacity; //     how much elements can fit
