@@ -93,13 +93,31 @@ static void shrink(dynamic_array* array)
 static inline bool should_shrink(const dynamic_array* array, bool grew) { return grew == false && array->count > 0 && array->count <= array->capacity / 4; }
 static inline bool should_grow(const dynamic_array* array) { return array->count >= array->capacity; }
 
+bool grew = false;
+
 void da_append(dynamic_array *array, void* element) 
 {
     if (!checks(array)) { return; }
     array->data[array->count] = element;
     array->count++;
 
-    if (should_grow(array)) { grow(array); }
+    if (should_grow(array)) { grow(array); grew = true; }
+}
+
+void da_remove(dynamic_array *array, int index) 
+{
+    if (!checks(array)) { return; } ;
+    
+    if (!index_check(array, index)) { return; }
+    
+    // shift it left!!
+    for (int i = index; i < array->count - 1; i++) {
+        array->data[i] = array->data[i + 1];
+    }
+
+    if (should_shrink(array, grew)) { shrink(array); grew = false; }
+    
+    array->count--;
 }
 
 #endif
