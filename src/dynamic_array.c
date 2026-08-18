@@ -12,7 +12,7 @@ void** da_init(dynamic_array* array, size_t capacity, size_t element_size)
     // god is probably in deep hatred because of void**
     // humanity is ruined, void* was bad enough
 
-    if (element_size<=0) { element_size = 4;}
+    if (element_size<=0) { element_size = sizeof(void*);}
     if (capacity<=0) { capacity = 4; }
     // stupid fucking hack
 
