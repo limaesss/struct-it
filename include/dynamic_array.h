@@ -6,16 +6,13 @@
 
 typedef struct {
     void** data;
-    size_t element_size;
-    // im keeping this, its funny
-    // please remember to set it to sizeof(void*)!
     size_t count; //        count of elements in array
     size_t capacity; //     how much elements can fit
 
     bool grew;
 } dynamic_array;
 
-void** da_init(dynamic_array* array, size_t capacity, size_t element_size);
+void** da_init(dynamic_array* array, size_t capacity);
 
 void da_rollback(dynamic_array* array);
 

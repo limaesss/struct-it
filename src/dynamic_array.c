@@ -7,12 +7,11 @@
 
 #include "../include/dynamic_array.h"
 
-void** da_init(dynamic_array* array, size_t capacity, size_t element_size)
+void** da_init(dynamic_array* array, size_t capacity)
 {
     // god is probably in deep hatred because of void**
     // humanity is ruined, void* was bad enough
 
-    if (element_size<=0) { element_size = sizeof(void*);}
     if (capacity<=0) { capacity = 4; }
     // stupid fucking hack
 
@@ -22,10 +21,10 @@ void** da_init(dynamic_array* array, size_t capacity, size_t element_size)
     // your heap is not real
     // 4 bytes
 
-    void** data = (void**)malloc(capacity * element_size);
+    void** data = (void**)malloc(capacity * sizeof(void*));
 
     if (data == NULL) {
-        printf("[DA] init failed \n its only up from here, buy more RAM. \n You dont have enough to initialize an array with the size of %lu bytes. \n If youre running this on an embedded system, why are you using THIS data-struct lib? use literally any other one. \n Never try to make dynamic arrays, EVER AGAIN. Until you buy more RAM. \n", (capacity * element_size));
+        printf("[DA] init failed \n its only up from here, buy more RAM. \n You dont have enough to initialize an array with the size of %lu bytes. \n If youre running this on an embedded system, why are you using THIS data-struct lib? use literally any other one. \n Never try to make dynamic arrays, EVER AGAIN. Until you buy more RAM. \n", (capacity * sizeof(void*)));
         printf("[DA] now, if you excuse me, im leaving. Sucker");
         exit(69420);
         // what TED talk is this?
@@ -33,7 +32,6 @@ void** da_init(dynamic_array* array, size_t capacity, size_t element_size)
         printf("[DA] init successful \n you have enough RAM! Wowza!");
     }
 
-    array->element_size = element_size;
     array->capacity = capacity;
     array->count = 0;
     return data;
@@ -60,7 +58,7 @@ void da_rollback(dynamic_array* array)
     // please dont free array without a verified adult
     // (if this function has the chance of call after you free this)
     // thanks
-    array->data = da_init(array, array->capacity, array->element_size);
+    array->data = da_init(array, array->capacity);
     // throw it all away, i dont fucking care about the data
     // if you store valuable stuff (pointers) on that array..
     // theyre not gone, theyre gone from the array
@@ -99,7 +97,7 @@ static bool index_check(dynamic_array* array, int index)
 static void grow(dynamic_array* array) 
 {
     size_t new_capacity = array->capacity * 2;
-    void* new_data = realloc(array->data, new_capacity * array->element_size);
+    void* new_data = realloc(array->data, new_capacity * sizeof(void*));
     
     if (new_data == NULL) {
         printf("[DA] realloc failed \n");
@@ -117,7 +115,7 @@ static void shrink(dynamic_array* array)
     size_t new_capacity = array->capacity / 2; 
     // if you have any elements in that half,
     // prepare to read a doc about how to let go
-    void* new_data = realloc(array->data, new_capacity * array->element_size);
+    void* new_data = realloc(array->data, new_capacity * sizeof(void*));
     
     if (new_data == NULL) {
         printf("[DA] realloc failed \n"); // or not!
