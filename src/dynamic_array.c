@@ -56,11 +56,15 @@ void** da_init(dynamic_array* array, size_t capacity, size_t element_size)
 
 void da_rollback(dynamic_array* array) 
 {
-    free(array->data); // double free! Hooray!
-                           // please dont free it without a verified adult
-                           // thanks
+    free(array->data);
+    // please dont free array without a verified adult
+    // (if this function has the chance of call after you free this)
+    // thanks
     array->data = da_init(array, array->capacity, array->element_size);
-    // throw it all away, i dont fucking care
+    // throw it all away, i dont fucking care about the data
+    // if you store valuable stuff (pointers) on that array..
+    // theyre not gone, theyre gone from the array
+    // oopsie daisy!
 }
 
 static bool checks(dynamic_array* array) 

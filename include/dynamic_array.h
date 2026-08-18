@@ -6,7 +6,9 @@
 
 typedef struct {
     void** data;
-    size_t element_size; // size of each element
+    size_t element_size; // size of each element 
+    // im keeping this, its funny
+    // please remember to set it to sizeof(void*)!
     size_t count; //        count of elements in array
     size_t capacity; //     how much elements can fit
 
