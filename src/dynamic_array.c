@@ -144,14 +144,15 @@ it will still be reliant on you..
 void da_append(dynamic_array *array, void* element) 
 {
     if (!checks(array)) { return; }
+
+    if (should_grow(array)) { grow(array); }
+    // if should grow grow and grew
+
     array->data[array->count] = element;  
     array->count++;
 
     // why does it have to be like this? 
     // please add "append(void* array, void* element)"" PLEASE
-
-    if (should_grow(array)) { grow(array); }
-    // if should grow grow and grew
 }
 
 void da_remove(dynamic_array *array, int index) 
